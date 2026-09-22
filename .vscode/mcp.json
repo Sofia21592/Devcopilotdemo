@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "mysql-cafe-ro2-password",
+      "description": "Password for the cafe_ro2 MySQL login",
+      "password": true
+    },
+    {
+      "type": "promptString",
+      "id": "github_mcp_pat",
+      "description": "GitHub Personal Access Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "mysql": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/tools/toolbox.exe",
+      "args": [
+        "--prebuilt",
+        "mysql",
+        "--stdio"
+      ],
+      "env": {
+        "MYSQL_HOST": "127.0.0.1",
+        "MYSQL_PORT": "3306",
+        "MYSQL_DATABASE": "cafe_db2",
+        "MYSQL_USER": "cafe_ro2",
+        "MYSQL_PASSWORD": "${input:mysql-cafe-ro2-password}"
+      }
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:github_mcp_pat}"
+      }
+    }
+  }
+}
